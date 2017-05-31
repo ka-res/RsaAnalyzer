@@ -122,7 +122,11 @@ namespace RsaAnalyzer.ViewModels
             {
                 var result = new RsaProvider();
                 return _encryptByte ?? (_encryptByte = new RelayCommand(
-                           param => { result.EncryptValue(PlainByte, E, N);  }
+                           param =>
+                           {
+                               result.EncryptValue(PlainByte, E, N);
+                               OnPropertyChanged(nameof(PlainByte));
+                           }
                        ));
             }
         }
@@ -133,7 +137,11 @@ namespace RsaAnalyzer.ViewModels
             {
                 var result = new RsaProvider();
                 return _decryptByte ?? (_decryptByte = new RelayCommand(
-                           param => { result.DecryptValue(EncryptedByte, D, N);  }
+                           param =>
+                           {
+                               result.DecryptValue(EncryptedByte, D, N);
+                               OnPropertyChanged(nameof(EncryptByte));
+                           }
                        ));
             }
         }

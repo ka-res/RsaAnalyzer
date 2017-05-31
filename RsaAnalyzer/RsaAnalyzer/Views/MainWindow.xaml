@@ -41,12 +41,12 @@
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="0"  Margin="15">
             <Label Content="Encrypted number:"></Label>
-            <TextBox Text="{Binding EncryptedByte}" Margin="15,5,15,5"></TextBox>
+            <Label Content="{Binding EncryptedByte}" Margin="15,5,15,5"></Label>
             <Button Content="Decrypt encrypted byte" Margin="15,25,15,0" Command="{Binding DecryptByte}"></Button>
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="1"  Margin="15">
             <Label Content="Decrypted number:"></Label>
-            <TextBox Text="{Binding DecryptedByte}" Margin="15,5,15,5"></TextBox>
+            <Label Content="{Binding DecryptedByte}" Margin="15,5,15,5"></Label>
             <Button Content="Display chart" Margin="15,25,15,0"></Button>
         </StackPanel>
         <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Margin="15">
