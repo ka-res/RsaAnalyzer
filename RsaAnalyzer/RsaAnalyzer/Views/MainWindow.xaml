@@ -1,0 +1,56 @@
+﻿<Window x:Class="RsaAnalyzer.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RsaAnalyzer.Views"
+        xmlns:viewModels="clr-namespace:RsaAnalyzer.ViewModels"
+        mc:Ignorable="d"
+        Title="RSA Analyzer" Height="500" Width="530">
+
+    <Window.DataContext>
+        <viewModels:RsaViewModel />
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="1*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Margin="15,5,15,5">
+            <Label Content="Please provide input data for further analysis" FontWeight="Bold"></Label>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="0" Margin="15">
+            <Label Content="Insert number [0-255]:"></Label>
+            <TextBox Text="{Binding PlainByte}" Margin="15,5,15,5"></TextBox>
+            <Button Content="Generate primes" Margin="15,25,15,0" Command="{Binding GeneratePrimes}"></Button>
+            <Button Content="Encrypt given byte" Margin="15,5,15,0" Command="{Binding EncryptByte}"></Button>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="15" Background="LightGray">
+            <Label Content="Public key:"></Label>
+            <Label Content="{Binding PublicKey}" Height="25" FontWeight="Bold" HorizontalAlignment="Center"></Label>
+            <Label Content="Private key:"></Label>
+            <Label Content="{Binding PrivateKey}" Height="25" FontWeight="Bold" HorizontalAlignment="Center"></Label>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="0"  Margin="15">
+            <Label Content="Encrypted number:"></Label>
+            <TextBox Text="{Binding EncryptedByte}" Margin="15,5,15,5"></TextBox>
+            <Button Content="Decrypt encrypted byte" Margin="15,25,15,0" Command="{Binding DecryptByte}"></Button>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="1"  Margin="15">
+            <Label Content="Decrypted number:"></Label>
+            <TextBox Text="{Binding DecryptedByte}" Margin="15,5,15,5"></TextBox>
+            <Button Content="Display chart" Margin="15,25,15,0"></Button>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Margin="15">
+            <Label Content="© 2017, Ernest Jędrzejczyk, Kamil Witkowski, Kamil Reszka for WULS"></Label>
+        </StackPanel>
+    </Grid>
+</Window>
