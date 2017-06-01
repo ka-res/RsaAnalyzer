@@ -96,10 +96,8 @@ namespace RsaAnalyzer.ViewModels
             D = values.Item3;
 
             Rsa = new Rsa(N, E, D);
-            FileOperator.SaveToFile("paniLodzia.txt", Rsa);
 
-            OnPropertyChanged(nameof(PublicKey));
-            OnPropertyChanged(nameof(PrivateKey));
+            FileOperator.SaveToFile("paniLodzia.txt", Rsa);
         }
 
         private ICommand _generatePrimes;
