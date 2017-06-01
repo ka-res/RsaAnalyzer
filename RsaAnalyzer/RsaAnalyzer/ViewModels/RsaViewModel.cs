@@ -97,9 +97,6 @@ namespace RsaAnalyzer.ViewModels
 
             Rsa = new Rsa(N, E, D);
             FileOperator.SaveToFile("paniLodzia.txt", Rsa);
-
-            OnPropertyChanged(nameof(PublicKey));
-            OnPropertyChanged(nameof(PrivateKey));
         }
 
         private ICommand _generatePrimes;
@@ -111,7 +108,12 @@ namespace RsaAnalyzer.ViewModels
             get
             {
                 return _generatePrimes ?? (_generatePrimes = new RelayCommand(
-                           param => { PrepareRsa(); }
+                           param =>
+                           {
+                               PrepareRsa();
+                               OnPropertyChanged(nameof(PublicKey));
+                               OnPropertyChanged(nameof(PrivateKey));
+                           }
                        ));
             }
         }
@@ -124,8 +126,8 @@ namespace RsaAnalyzer.ViewModels
                 return _encryptByte ?? (_encryptByte = new RelayCommand(
                            param =>
                            {
-                               result.EncryptValue(PlainByte, E, N);
-                               OnPropertyChanged(nameof(PlainByte));
+                               EncryptedByte = result.EncryptValue(PlainByte, E, N);
+                               OnPropertyChanged(nameof(EncryptedByte));
                            }
                        ));
             }
@@ -139,8 +141,8 @@ namespace RsaAnalyzer.ViewModels
                 return _decryptByte ?? (_decryptByte = new RelayCommand(
                            param =>
                            {
-                               result.DecryptValue(EncryptedByte, D, N);
-                               OnPropertyChanged(nameof(EncryptByte));
+                               DecryptedByte = result.DecryptValue(EncryptedByte, D, N);
+                               OnPropertyChanged(nameof(DecryptedByte));
                            }
                        ));
             }
