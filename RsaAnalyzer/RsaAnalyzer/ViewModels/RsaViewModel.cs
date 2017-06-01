@@ -111,7 +111,13 @@ namespace RsaAnalyzer.ViewModels
             get
             {
                 return _generatePrimes ?? (_generatePrimes = new RelayCommand(
-                           param => { PrepareRsa(); }
+                           param =>
+                           {
+                               PrepareRsa();
+
+                               OnPropertyChanged(nameof(PublicKey));
+                               OnPropertyChanged(nameof(PrivateKey));
+                           }
                        ));
             }
         }
@@ -122,7 +128,12 @@ namespace RsaAnalyzer.ViewModels
             {
                 var result = new RsaProvider();
                 return _encryptByte ?? (_encryptByte = new RelayCommand(
-                           param => { result.EncryptValue(PlainByte, E, N);  }
+                           param =>
+                           {
+                               EncryptedByte = result.EncryptValue(PlainByte, E, N);
+
+                               OnPropertyChanged(nameof(EncryptedByte));
+                           }
                        ));
             }
         }
@@ -133,7 +144,12 @@ namespace RsaAnalyzer.ViewModels
             {
                 var result = new RsaProvider();
                 return _decryptByte ?? (_decryptByte = new RelayCommand(
-                           param => { result.DecryptValue(EncryptedByte, D, N);  }
+                           param =>
+                           {
+                               DecryptedByte = result.DecryptValue(EncryptedByte, D, N);
+
+                               OnPropertyChanged(nameof(DecryptedByte));
+                           }
                        ));
             }
         }
