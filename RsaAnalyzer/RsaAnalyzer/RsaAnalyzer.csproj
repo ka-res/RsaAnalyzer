@@ -58,6 +58,7 @@
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Responsibility\RsaProvider.cs" />
     <Compile Include="Utilities\FileOperator.cs" />
+    <Compile Include="Utilities\TimeCounter.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="ViewModels\RsaViewModel.cs" />
