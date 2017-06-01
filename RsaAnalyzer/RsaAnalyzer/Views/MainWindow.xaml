@@ -30,24 +30,24 @@
         <StackPanel Grid.Row="1" Grid.Column="0" Margin="15">
             <Label Content="Insert number [0-255]:"></Label>
             <TextBox Text="{Binding PlainByte}" Margin="15,5,15,5"></TextBox>
-            <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="DarkGray" BorderBrush="DarkGray" Width="160" Content="Generate primes" Margin="15,25,15,0" Command="{Binding GeneratePrimes}"></Button>
-            <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="DarkGray" BorderBrush="DarkGray" Width="160" Content="Encrypt given byte" Margin="15,5,15,0" Command="{Binding EncryptByte}"></Button>
+            <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="LightGray" BorderBrush="LightGray" Content="Generate primes" Margin="15,25,15,0" Command="{Binding GeneratePrimes}" HorizontalAlignment="Stretch"/>
+            <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="LightGray" BorderBrush="LightGray" Content="Encrypt given byte" Margin="15,5,15,0" Command="{Binding EncryptByte}" HorizontalAlignment="Stretch"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1" Margin="15" Background="LightGray">
             <Label Content="Public key:"></Label>
-            <Label Content="{Binding PublicKey}" Height="25" FontWeight="Bold" HorizontalAlignment="Center"></Label>
+            <Label Content="{Binding PublicKey}" Height="25" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,15"></Label>
             <Label Content="Private key:"></Label>
             <Label Content="{Binding PrivateKey}" Height="25" FontWeight="Bold" HorizontalAlignment="Center"></Label>
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="0"  Margin="15">
             <Label Content="Encrypted number:"></Label>
             <TextBlock Text="{Binding EncryptedByte}" Margin="15,5,15,5"></TextBlock>
-            <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="DarkGray" BorderBrush="DarkGray" Width="160" Content="Decrypt encrypted byte" Margin="15,25,15,0" Command="{Binding DecryptByte}"></Button>
+            <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="LightGray" BorderBrush="LightGray" Content="Decrypt encrypted byte" Margin="15,25,15,0" Command="{Binding DecryptByte}" HorizontalAlignment="Stretch"/>
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="1"  Margin="15">
             <Label Content="Decrypted number:"></Label>
             <TextBlock Text="{Binding DecryptedByte}" Margin="15,5,15,5"></TextBlock>
-            <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="DarkGray" BorderBrush="DarkGray" Width="160" Content="Display chart" Margin="15,25,15,0"></Button>
+            <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="LightGray" BorderBrush="LightGray" Content="Display chart" Margin="15,25,15,0" HorizontalAlignment="Stretch"/>
         </StackPanel>
         <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Margin="15">
             <Label Content="© 2017, Ernest Jędrzejczyk, Kamil Witkowski, Kamil Reszka for WULS" Foreground="Gray" FontWeight="ExtraLight"></Label>

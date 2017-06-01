@@ -6,7 +6,7 @@ namespace RsaAnalyzer.Utilities
 {
     class FileOperator
     {
-        public static void SaveToFile(string fileName, Rsa rsa)
+        public static void SaveRsaToFile(string fileName, Rsa rsa)
         {
             using (var fileStream = new FileStream(
                 Path.Combine($"C:/users/{Environment.UserName}/Desktop", fileName),
@@ -21,7 +21,7 @@ namespace RsaAnalyzer.Utilities
             }
         }
 
-        public static Rsa ReadFromFile(string fileName, out Rsa rsa)
+        public static Rsa ReadRsaFromFile(string fileName, out Rsa rsa)
         {
             using (var fileStream = new FileStream(
                 Path.Combine($"C:/users/{Environment.UserName}/Desktop", fileName),
@@ -39,5 +39,32 @@ namespace RsaAnalyzer.Utilities
                 }
             }
         }
+
+        public static void SaveTimeSpanToFile(string fileName, TimeSpan timeSpan, string stageName)
+        {
+            using (var fileStream = new FileStream(
+                Path.Combine($"C:/users/{Environment.UserName}/Desktop", fileName),
+                FileMode.Append))
+            {
+                using (var streamWriter = new StreamWriter(fileStream))
+                {
+                    streamWriter.WriteLine($"{stageName}: {TimeCounter.RepresentAsTicks(timeSpan)}");
+                }
+            }
+        }
+
+        //TODO: reading TimeSPan from file
+        //public static TimeSpan ReadTimeSpanFromFile(string fileName, out TimeSpan timeSpan)
+        //{
+        //    using (var fileStream = new FileStream(
+        //        Path.Combine($"C:/users/{Environment.UserName}/Desktop", fileName),
+        //        FileMode.Open))
+        //    {
+        //        using (var streamReader = new StreamReader(fileStream))
+        //        {
+                    
+        //        }
+        //    }
+        //}
     }
 }

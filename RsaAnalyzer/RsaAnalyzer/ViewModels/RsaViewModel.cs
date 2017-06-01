@@ -97,7 +97,7 @@ namespace RsaAnalyzer.ViewModels
 
             Rsa = new Rsa(N, E, D);
 
-            FileOperator.SaveToFile("paniLodzia.txt", Rsa);
+            FileOperator.SaveRsaToFile("paniLodzia.txt", Rsa);
         }
 
         private ICommand _generatePrimes;
