@@ -9,9 +9,13 @@ namespace RsaAnalyzer.Utilities
 
         public static Tuple<ushort, ushort, int> Run()
         {
-            var primes = GetNotDivideable();
-            byte p = primes[Random.Next(0, primes.Length)],
-                q = primes[Random.Next(0, primes.Length)];
+            Responsibility.SieveofEratosthenes sieveofEratosthenes =
+                new Responsibility.SieveofEratosthenes();
+
+            var primes = sieveofEratosthenes.RunAlgorithm();
+
+            byte p = primes[Random.Next(0, primes.Count)],
+                q = primes[Random.Next(0, primes.Count)];
 
             var n = ReturnN(p, q);
             var phi = ReturnPhi(p, q);
@@ -74,26 +78,6 @@ namespace RsaAnalyzer.Utilities
             public int u1;
             public int u2;
             public int gcd;
-        }
-
-        private static byte[] GetNotDivideable()
-        {
-            var notDivideable = new List<byte>();
-
-            for (var x = 2; x < 256; x++)
-            {
-                var n = 0;
-                for (var y = 1; y <= x; y++)
-                {
-                    if (x % y == 0)
-                        n++;
-                }
-
-                if (n <= 2)
-                    notDivideable.Add((byte)x);
-            }
-
-            return notDivideable.ToArray();
         }
 
         private static ushort ReturnN(byte p, byte q)
