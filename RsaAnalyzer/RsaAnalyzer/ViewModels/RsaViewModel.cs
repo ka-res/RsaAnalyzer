@@ -7,11 +7,11 @@ namespace RsaAnalyzer.ViewModels
     internal class RsaViewModel : BaseViewModel
     {
         private Rsa _rsa;
-        private ushort _n;
-        private ushort _e;
-        private int _d;
+        private uint _n;
+        private uint _e;
+        private long _d;
         private ushort _plainByte;
-        private int _encryptedByte;
+        private long _encryptedByte;
         private int _decryptedByte;
 
         public Rsa Rsa
@@ -24,7 +24,7 @@ namespace RsaAnalyzer.ViewModels
             }
         }
 
-        public ushort N
+        public uint N
         {
             get => _n;
             set
@@ -34,7 +34,7 @@ namespace RsaAnalyzer.ViewModels
             }
         }
 
-        public ushort E
+        public uint E
         {
             get => _e;
             set
@@ -44,7 +44,7 @@ namespace RsaAnalyzer.ViewModels
             }
         }
 
-        public int D
+        public long D
         {
             get => _d;
             set
@@ -64,7 +64,7 @@ namespace RsaAnalyzer.ViewModels
             }
         }
 
-        public int EncryptedByte
+        public long EncryptedByte
         {
             get => _encryptedByte;
             set

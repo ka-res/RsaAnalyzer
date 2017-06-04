@@ -7,15 +7,17 @@ namespace RsaAnalyzer.Utilities
     {
         private static readonly Random Random = new Random();
 
-        public static Tuple<ushort, ushort, int> Run()
+        public static Tuple<uint, uint, long> Run()
         {
             Responsibility.SieveofEratosthenes sieveofEratosthenes =
                 new Responsibility.SieveofEratosthenes();
 
-            var primes = sieveofEratosthenes.RunAlgorithm();
+            var allPrimes = sieveofEratosthenes.RunAlgorithm();
 
-            byte p = primes[Random.Next(0, primes.Count)],
-                q = primes[Random.Next(0, primes.Count)];
+            var primes = allPrimes.GetRange(allPrimes.Count/2, allPrimes.Count / 2);
+
+            ushort p = primes[Random.Next(0, primes.Count)],
+                   q = primes[Random.Next(0, primes.Count)];
 
             var n = ReturnN(p, q);
             var phi = ReturnPhi(p, q);
@@ -25,31 +27,32 @@ namespace RsaAnalyzer.Utilities
             var e = eAndD.Item1;
             var d = eAndD.Item2;
 
-            return new Tuple<ushort, ushort, int>(n, e, d);
+            return new Tuple<uint, uint, long>(n, e, d);
         }
 
-        private static int ModuloPow(int value, int pow, int modulo)
+        private static long ModuloPow(long value, long pow, uint modulo)
         {
-            var result = value;
+            long  result = value;
             for (var i = 0; i < pow - 1; i++)
             {
-                result = (result * value) % modulo;
+                result = (result * value);
+                result = result % modulo;
             }
             return result;
         }
 
-        private static ExtendedEuclideanResult ExtendedEuclidean(int a, int b)
+        private static ExtendedEuclideanResult ExtendedEuclidean(long a, long b)
         {
-            var u1 = 1;
-            var u3 = a;
-            var v1 = 0;
-            var v3 = b;
+            long u1 = 1;
+            long u3 = a;
+            long v1 = 0;
+            long v3 = b;
 
             while (v3 > 0)
             {
                 var q0 = u3 / v3;
                 var q1 = u3 % v3;
-                var tmp = v1 * q0;
+                long tmp = v1 * q0;
                 var tn = u1 - tmp;
 
                 u1 = v1;
@@ -75,24 +78,24 @@ namespace RsaAnalyzer.Utilities
 
         private struct ExtendedEuclideanResult
         {
-            public int u1;
-            public int u2;
-            public int gcd;
+            public long u1;
+            public long u2;
+            public long gcd;
         }
 
-        private static ushort ReturnN(byte p, byte q)
+        private static uint ReturnN(ushort p, ushort q)
         {
-            return (ushort)(p * q);
+            return (uint)(p * q);
         }
 
-        private static ushort ReturnPhi(byte p, byte q)
+        private static uint ReturnPhi(ushort p, ushort q) //uint
         {
-            return (ushort)((p - 1) * (q - 1));
+            return (uint)((p - 1) * (q - 1));
         }
 
-        static List<ushort> ReturnPossibleE(ushort phi)
+        static List<uint> ReturnPossibleE(uint phi)
         {
-            var result = new List<ushort>();
+            var result = new List<uint>();
 
             for (ushort i = 2; i < phi; i++)
             {
@@ -105,27 +108,31 @@ namespace RsaAnalyzer.Utilities
             return result;
         }
 
-        private static Tuple<ushort, int> ReturnEAndD(IReadOnlyList<ushort> possibleE, ushort phi)
+        private static Tuple<uint, long> ReturnEAndD(IReadOnlyList<uint> possibleE, uint phi)
         {
-            ushort e;
-            int d;
+            uint e;
+            long d;
 
             do
             {
                 e = possibleE[Random.Next(0, possibleE.Count)];
 
-                d = ExtendedEuclidean(e % phi, phi).u1;
+                long arg1 = e % phi;
+                long arg2 = phi;
+                
+
+                d = ExtendedEuclidean(arg1, arg2).u1;
             } while (d < 0);
 
-            return new Tuple<ushort, int>(e, d);
+            return new Tuple<uint, long>(e, d);
         }
 
-        public int EncryptValue(ushort plainByte, ushort e, ushort n)
+        public long EncryptValue(ushort plainByte, uint e, uint n)
         {
             return ModuloPow(plainByte, e, n);
         }
 
-        public int DecryptValue(int encryptedByte, int d, ushort n)
+        public int DecryptValue(long encryptedByte, long d, uint n)
         {
             return (ushort)ModuloPow(encryptedByte, d, n);
         }
