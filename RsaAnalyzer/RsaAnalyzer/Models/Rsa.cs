@@ -2,16 +2,16 @@
 {
     class Rsa
     {
-        public ushort N { get; set; }
-        public ushort E { get; set; }
-        public int D { get; set; }
+        public uint N { get; set; }
+        public uint E { get; set; }
+        public long D { get; set; }
 
         public Rsa()
         {
             
         }
 
-        public Rsa(ushort n, ushort e, int d)
+        public Rsa(uint n, uint e, long d)
         {
             N = n;
             E = e;
