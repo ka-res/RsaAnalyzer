@@ -127,7 +127,7 @@ namespace RsaAnalyzer.Utilities
 
         public int DecryptValue(int encryptedByte, int d, ushort n)
         {
-            return (byte)ModuloPow(encryptedByte, d, n);
+            return (ushort)ModuloPow(encryptedByte, d, n);
         }
     }
 }
