@@ -120,7 +120,7 @@ namespace RsaAnalyzer.Utilities
             return new Tuple<ushort, int>(e, d);
         }
 
-        public int EncryptValue(byte plainByte, ushort e, ushort n)
+        public int EncryptValue(ushort plainByte, ushort e, ushort n)
         {
             return ModuloPow(plainByte, e, n);
         }

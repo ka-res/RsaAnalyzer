@@ -10,7 +10,7 @@ namespace RsaAnalyzer.ViewModels
         private ushort _n;
         private ushort _e;
         private int _d;
-        private byte _plainByte;
+        private ushort _plainByte;
         private int _encryptedByte;
         private int _decryptedByte;
 
@@ -54,7 +54,7 @@ namespace RsaAnalyzer.ViewModels
             }
         }
 
-        public byte PlainByte
+        public ushort PlainByte
         {
             get => _plainByte;
             set
