@@ -10,9 +10,9 @@ namespace RsaAnalyzer.Responsibility
     {
         // private long n = 9 * 1234567l; // max range of primes to look for
 
-       // private byte n = 255;
+        // private byte n = 255;
 
-        private ushort n = ushort.MaxValue;
+        private ushort n = 65535; // ushort.MaxValue;
 
         private bool[] tableOfNumbers;
         private List<ushort> primeNumbersList;
@@ -38,7 +38,7 @@ namespace RsaAnalyzer.Responsibility
                 }
             }
 
-            for (ushort i = 0; i < tableOfNumbers.LongLength; i++)
+            for (ushort i = 0; i < tableOfNumbers.Length; i++)
             {
                 if (tableOfNumbers[i] == true)
                 {
