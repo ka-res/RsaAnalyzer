@@ -19,6 +19,7 @@ namespace RsaAnalyzer.ViewModels
         private volatile bool _initialized;
         private volatile bool _encrypting;
         private volatile bool _decrypting;
+        private volatile bool _repeating;
 
         public RsaViewModel()
         {
@@ -30,9 +31,9 @@ namespace RsaAnalyzer.ViewModels
 
                     OnPropertyChanged(nameof(PublicKey));
                     OnPropertyChanged(nameof(PrivateKey));
-
-                    Initialized = true;
                 }
+
+                Initialized = true;
 
             }, p => !Initialized);
 
@@ -52,9 +53,6 @@ namespace RsaAnalyzer.ViewModels
                 {
                     Encrypting = false;
                 }
-
-                OnPropertyChanged(nameof(EncryptByte));
-                OnPropertyChanged(nameof(DecryptByte));
 
             }, p => !Encrypting);
 
@@ -76,6 +74,14 @@ namespace RsaAnalyzer.ViewModels
                 }
 
             }, p => !Decrypting);
+
+            _repeat = new RelayCommand(p =>
+                {
+                    Initialized = false;
+                    Encrypting = false;
+                    Decrypting = false;
+
+                }, p => Initialized);
         }
 
         public bool Initialized
@@ -110,6 +116,20 @@ namespace RsaAnalyzer.ViewModels
                 OnPropertyChanged();
 
                 GeneratePrimes.RaiseCanExecuteChanged();
+                DecryptByte.RaiseCanExecuteChanged();
+            }
+        }
+
+        public bool Repeating
+        {
+            get => _repeating;
+            set
+            {
+                _repeating = value;
+                OnPropertyChanged();
+
+                GeneratePrimes.RaiseCanExecuteChanged();
+                EncryptByte.RaiseCanExecuteChanged();
                 DecryptByte.RaiseCanExecuteChanged();
             }
         }
@@ -203,6 +223,7 @@ namespace RsaAnalyzer.ViewModels
         private RelayCommand _generatePrimes;
         private RelayCommand _encryptByte;
         private RelayCommand _decryptByte;
+        private RelayCommand _repeat;
 
         public RelayCommand GeneratePrimes
         {
@@ -212,17 +233,6 @@ namespace RsaAnalyzer.ViewModels
                 _generatePrimes = value;
                 OnPropertyChanged();
             }
-            //{
-            //    return _generatePrimes ?? (_generatePrimes = new RelayCommand(
-            //               param =>
-            //               {
-            //                   PrepareRsa();
-
-            //                   OnPropertyChanged(nameof(PublicKey));
-            //                   OnPropertyChanged(nameof(PrivateKey));
-            //               }
-            //           ));
-            //}
         }
 
         public RelayCommand EncryptByte
@@ -233,17 +243,6 @@ namespace RsaAnalyzer.ViewModels
                 _encryptByte = value;
                 OnPropertyChanged();
             }
-            //{
-            //    var result = new RsaProvider();
-            //    return _encryptByte ?? (_encryptByte = new RelayCommand(
-            //               param =>
-            //               {
-            //                   EncryptedByte = result.EncryptValue(PlainByte, E, N);
-
-            //                   OnPropertyChanged(nameof(EncryptedByte));
-            //               }
-            //           ));
-            //}
         }
 
         public RelayCommand DecryptByte
@@ -254,17 +253,24 @@ namespace RsaAnalyzer.ViewModels
                 _decryptByte = value;
                 OnPropertyChanged();
             }
-            //{
-            //    var result = new RsaProvider();
-            //    return _decryptByte ?? (_decryptByte = new RelayCommand(
-            //               param =>
-            //               {
-            //                   DecryptedByte = result.DecryptValue(EncryptedByte, D, N);
-
-            //                   OnPropertyChanged(nameof(DecryptedByte));
-            //               }
-            //           ));
-            //}
         }
+
+        public RelayCommand Repeat
+        {
+            get => _repeat;
+            set
+            {
+                _repeat = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string GenerateButtonContent => "Generate primes";
+
+        public string EncryptButtonContent => "Encrypt given message";
+
+        public string DecryptButtonContent => "Decrypt message";
+
+        public string RepeatButtonContent => "Repeat!";
     }
 }

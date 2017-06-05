@@ -31,9 +31,9 @@
             <Label Content="Insert number:"></Label>
             <TextBox Text="{Binding PlainByte}" Margin="15,5,15,5"></TextBox>
             <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="LightGray" BorderBrush="LightGray" 
-                    Content="Generate primes" Margin="15,25,15,0" Command="{Binding GeneratePrimes}" HorizontalAlignment="Stretch"/>
+                    Content="{Binding GenerateButtonContent}" Margin="15,25,15,0" Command="{Binding GeneratePrimes}" HorizontalAlignment="Stretch"/>
             <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="LightGray" BorderBrush="LightGray" 
-                    Content="Encrypt given byte" Margin="15,5,15,0" Command="{Binding EncryptByte}" HorizontalAlignment="Stretch"/>
+                    Content="{Binding EncryptButtonContent}" Margin="15,5,15,0" Command="{Binding EncryptByte}" HorizontalAlignment="Stretch"/>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1" Margin="15" Background="LightGray">
             <Label Content="Public key:"></Label>
@@ -45,13 +45,13 @@
             <Label Content="Encrypted number:"></Label>
             <TextBlock Text="{Binding EncryptedByte}" Margin="15,5,15,5"></TextBlock>
             <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="LightGray" BorderBrush="LightGray" 
-                    Content="Decrypt encrypted byte" Margin="15,25,15,0" Command="{Binding DecryptByte}" HorizontalAlignment="Stretch"/>
+                    Content="{Binding DecryptButtonContent}" Margin="15,25,15,0" Command="{Binding DecryptByte}" HorizontalAlignment="Stretch"/>
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="1"  Margin="15">
             <Label Content="Decrypted number:"></Label>
             <TextBlock Text="{Binding DecryptedByte}" Margin="15,5,15,5"></TextBlock>
             <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="LightGray" BorderBrush="LightGray" 
-                    Content="Display chart" Margin="15,25,15,0" HorizontalAlignment="Stretch"/>
+                    Content="{Binding RepeatButtonContent}" Margin="15,25,15,0" HorizontalAlignment="Stretch" Command="{Binding Repeat}"/>
         </StackPanel>
         <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Margin="15">
             <Label Content="© 2017, Ernest Jędrzejczyk, Kamil Witkowski, Kamil Reszka for WULS" Foreground="Gray" FontWeight="ExtraLight"></Label>
