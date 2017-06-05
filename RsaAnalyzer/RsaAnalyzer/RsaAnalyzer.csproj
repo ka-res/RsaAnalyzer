@@ -57,7 +57,7 @@
     </ApplicationDefinition>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Responsibility\RsaProvider.cs" />
-    <Compile Include="Responsibility\SieveofEratosthenes.cs" />
+    <Compile Include="Responsibility\SieveOfEratosthenes.cs" />
     <Compile Include="Utilities\FileOperator.cs" />
     <Compile Include="Utilities\TimeCounter.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />

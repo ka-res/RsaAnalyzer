@@ -6,47 +6,45 @@ using System.Threading.Tasks;
 
 namespace RsaAnalyzer.Responsibility
 {
-    public class SieveofEratosthenes
+    public class SieveOfEratosthenes
     {
         // private long n = 9 * 1234567l; // max range of primes to look for
 
         //private byte n = 255;
 
-        private ushort n = 255;
+        private ushort _n = 255;
 
-        private bool[] tableOfNumbers;
-        private List<ushort> primeNumbersList;
+        private bool[] _tableOfNumbers;
+        private List<ushort> _primeNumbersList;
 
         public List<ushort> RunAlgorithm()
         {
-            primeNumbersList = new List<ushort>();
-            tableOfNumbers = new bool[n];//by default they're all false
+            _primeNumbersList = new List<ushort>();
+            _tableOfNumbers = new bool[_n];//by default they're all false
 
-            for (uint i = 2; i < n; i++)
+            for (uint i = 2; i < _n; i++)
             {
-                tableOfNumbers[i] = true;//set all numbers to true
+                _tableOfNumbers[i] = true;//set all numbers to true
             }
             //weed out the non primes by finding mutiples 
-            for (uint j = 2; j < n; j++)
+            for (uint j = 2; j < _n; j++)
             {
-                if (tableOfNumbers[j])//is true
+                if (!_tableOfNumbers[j]) continue;
+                for (long p = 2; (p * j) < _n; p++)
                 {
-                    for (long p = 2; (p * j) < n; p++)
-                    {
-                        tableOfNumbers[p * j] = false;
-                    }
+                    _tableOfNumbers[p * j] = false;
                 }
             }
 
-            for (ushort i = 0; i < tableOfNumbers.LongLength; i++)
+            for (ushort i = 0; i < _tableOfNumbers.LongLength; i++)
             {
-                if (tableOfNumbers[i] == true)
+                if (_tableOfNumbers[i])
                 {
-                    primeNumbersList.Add(i);
+                    _primeNumbersList.Add(i);
                 }
             }
 
-            return primeNumbersList;
+            return _primeNumbersList;
             //Uptill here e[] sorta of contains a list of primes
             //the index represent the actual number and the value at the index represents if the number is prime
             //Example:

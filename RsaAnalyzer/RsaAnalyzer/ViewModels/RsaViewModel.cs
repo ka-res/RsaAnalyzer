@@ -7,12 +7,112 @@ namespace RsaAnalyzer.ViewModels
     internal class RsaViewModel : BaseViewModel
     {
         private Rsa _rsa;
+
         private uint _n;
         private uint _e;
         private long _d;
+
         private ushort _plainByte;
         private long _encryptedByte;
         private int _decryptedByte;
+
+        private volatile bool _initialized;
+        private volatile bool _encrypting;
+        private volatile bool _decrypting;
+
+        public RsaViewModel()
+        {
+            _generatePrimes = new RelayCommand(p =>
+            {
+                if (!Initialized)
+                {
+                    PrepareRsa();
+
+                    OnPropertyChanged(nameof(PublicKey));
+                    OnPropertyChanged(nameof(PrivateKey));
+
+                    Initialized = true;
+                }
+
+            }, p => !Initialized);
+
+            _encryptByte = new RelayCommand(p =>
+            {
+                var result = new RsaProvider();
+
+                if (!Encrypting)
+                {
+                    EncryptedByte = result.EncryptValue(PlainByte, E, N);
+
+                    OnPropertyChanged(nameof(EncryptedByte));
+
+                    Encrypting = true;
+                }
+                else
+                {
+                    Encrypting = false;
+                }
+
+                OnPropertyChanged(nameof(EncryptByte));
+                OnPropertyChanged(nameof(DecryptByte));
+
+            }, p => !Encrypting);
+
+            _decryptByte = new RelayCommand(p =>
+            {
+                var result = new RsaProvider();
+
+                if (!Decrypting)
+                {
+                    DecryptedByte = result.DecryptValue(EncryptedByte, D, N);
+
+                    OnPropertyChanged(nameof(DecryptedByte));
+
+                    Decrypting = true;
+                }
+                else
+                {
+                    Decrypting = false;
+                }
+
+            }, p => !Decrypting);
+        }
+
+        public bool Initialized
+        {
+            get => _initialized;
+            set
+            {
+                _initialized = true;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool Encrypting
+        {
+            get => _encrypting;
+            set
+            {
+                _encrypting = value;
+                OnPropertyChanged();
+
+                GeneratePrimes.RaiseCanExecuteChanged();
+                EncryptByte.RaiseCanExecuteChanged();
+            }
+        }
+
+        public bool Decrypting
+        {
+            get => _decrypting;
+            set
+            {
+                _decrypting = value;
+                OnPropertyChanged();
+
+                GeneratePrimes.RaiseCanExecuteChanged();
+                DecryptByte.RaiseCanExecuteChanged();
+            }
+        }
 
         public Rsa Rsa
         {
@@ -100,56 +200,71 @@ namespace RsaAnalyzer.ViewModels
             FileOperator.SaveRsaToFile("paniLodzia.txt", Rsa);
         }
 
-        private ICommand _generatePrimes;
-        private ICommand _encryptByte;
-        private ICommand _decryptByte;
+        private RelayCommand _generatePrimes;
+        private RelayCommand _encryptByte;
+        private RelayCommand _decryptByte;
 
-        public ICommand GeneratePrimes
+        public RelayCommand GeneratePrimes
         {
-            get
+            get => _generatePrimes;
+            set
             {
-                return _generatePrimes ?? (_generatePrimes = new RelayCommand(
-                           param =>
-                           {
-                               PrepareRsa();
-
-                               OnPropertyChanged(nameof(PublicKey));
-                               OnPropertyChanged(nameof(PrivateKey));
-                           }
-                       ));
+                _generatePrimes = value;
+                OnPropertyChanged();
             }
+            //{
+            //    return _generatePrimes ?? (_generatePrimes = new RelayCommand(
+            //               param =>
+            //               {
+            //                   PrepareRsa();
+
+            //                   OnPropertyChanged(nameof(PublicKey));
+            //                   OnPropertyChanged(nameof(PrivateKey));
+            //               }
+            //           ));
+            //}
         }
 
-        public ICommand EncryptByte
+        public RelayCommand EncryptByte
         {
-            get
+            get => _encryptByte;
+            set
             {
-                var result = new RsaProvider();
-                return _encryptByte ?? (_encryptByte = new RelayCommand(
-                           param =>
-                           {
-                               EncryptedByte = result.EncryptValue(PlainByte, E, N);
-
-                               OnPropertyChanged(nameof(EncryptedByte));
-                           }
-                       ));
+                _encryptByte = value;
+                OnPropertyChanged();
             }
+            //{
+            //    var result = new RsaProvider();
+            //    return _encryptByte ?? (_encryptByte = new RelayCommand(
+            //               param =>
+            //               {
+            //                   EncryptedByte = result.EncryptValue(PlainByte, E, N);
+
+            //                   OnPropertyChanged(nameof(EncryptedByte));
+            //               }
+            //           ));
+            //}
         }
 
-        public ICommand DecryptByte
+        public RelayCommand DecryptByte
         {
-            get
+            get => _decryptByte;
+            set
             {
-                var result = new RsaProvider();
-                return _decryptByte ?? (_decryptByte = new RelayCommand(
-                           param =>
-                           {
-                               DecryptedByte = result.DecryptValue(EncryptedByte, D, N);
-
-                               OnPropertyChanged(nameof(DecryptedByte));
-                           }
-                       ));
+                _decryptByte = value;
+                OnPropertyChanged();
             }
+            //{
+            //    var result = new RsaProvider();
+            //    return _decryptByte ?? (_decryptByte = new RelayCommand(
+            //               param =>
+            //               {
+            //                   DecryptedByte = result.DecryptValue(EncryptedByte, D, N);
+
+            //                   OnPropertyChanged(nameof(DecryptedByte));
+            //               }
+            //           ));
+            //}
         }
     }
 }

@@ -9,12 +9,11 @@ namespace RsaAnalyzer.Utilities
 
         public static Tuple<uint, uint, long> Run()
         {
-            Responsibility.SieveofEratosthenes sieveofEratosthenes =
-                new Responsibility.SieveofEratosthenes();
+            var sieveofEratosthenes = new Responsibility.SieveOfEratosthenes();
 
             var allPrimes = sieveofEratosthenes.RunAlgorithm();
 
-            var primes = allPrimes.GetRange(allPrimes.Count/2, allPrimes.Count / 2);
+            var primes = allPrimes.GetRange(allPrimes.Count / 2, allPrimes.Count / 2);
 
             ushort p = primes[Random.Next(0, primes.Count)],
                    q = primes[Random.Next(0, primes.Count)];
@@ -32,7 +31,7 @@ namespace RsaAnalyzer.Utilities
 
         private static long ModuloPow(long value, long pow, uint modulo)
         {
-            long  result = value;
+            var result = value;
             for (var i = 0; i < pow - 1; i++)
             {
                 result = (result * value);
@@ -67,9 +66,9 @@ namespace RsaAnalyzer.Utilities
 
             var result = new ExtendedEuclideanResult
             {
-                u1 = u1,
-                u2 = res,
-                gcd = u3
+                U1 = u1,
+                U2 = res,
+                Gcd = u3
 
             };
 
@@ -78,9 +77,9 @@ namespace RsaAnalyzer.Utilities
 
         private struct ExtendedEuclideanResult
         {
-            public long u1;
-            public long u2;
-            public long gcd;
+            public long U1;
+            public long U2;
+            public long Gcd;
         }
 
         private static uint ReturnN(ushort p, ushort q)
@@ -93,13 +92,13 @@ namespace RsaAnalyzer.Utilities
             return (uint)((p - 1) * (q - 1));
         }
 
-        static List<uint> ReturnPossibleE(uint phi)
+        private static List<uint> ReturnPossibleE(uint phi)
         {
             var result = new List<uint>();
 
             for (ushort i = 2; i < phi; i++)
             {
-                if (ExtendedEuclidean(i, phi).gcd == 1)
+                if (ExtendedEuclidean(i, phi).Gcd == 1)
                 {
                     result.Add(i);
                 }
@@ -119,9 +118,9 @@ namespace RsaAnalyzer.Utilities
 
                 long arg1 = e % phi;
                 long arg2 = phi;
-                
 
-                d = ExtendedEuclidean(arg1, arg2).u1;
+
+                d = ExtendedEuclidean(arg1, arg2).U1;
             } while (d < 0);
 
             return new Tuple<uint, long>(e, d);
