@@ -267,10 +267,13 @@ namespace RsaAnalyzer.ViewModels
 
         public string GenerateButtonContent => "Generate primes";
 
-        public string EncryptButtonContent => "Encrypt given message";
+        public string EncryptButtonContent => "Encrypt message";
 
         public string DecryptButtonContent => "Decrypt message";
 
-        public string RepeatButtonContent => "Repeat!";
+        public string RepeatButtonContent => "Clear";
+        public string ClueMessage => "To restart for new message \npress the button below";
+
+        public string AboutMessage => "© 2017 \nErnest Jędrzejczyk \nKamil Reszka \nKamil Witkowski \nfor WULS";
     }
 }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:RsaAnalyzer.Views"
         xmlns:viewModels="clr-namespace:RsaAnalyzer.ViewModels"
         mc:Ignorable="d"
-        Title="RSA Analyzer" Height="500" Width="530">
+        Title="RSA Analyzer" Height="560" Width="640" Background="DarkGray">
 
     <Window.DataContext>
         <viewModels:RsaViewModel />
@@ -14,47 +14,45 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="2*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
-            <RowDefinition Height="3*"></RowDefinition>
-            <RowDefinition Height="3*"></RowDefinition>
-            <RowDefinition Height="1*"></RowDefinition>
+            <RowDefinition Height="4*"></RowDefinition>
+            <RowDefinition Height="6*"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Margin="15,5,15,5">
-            <Label Content="Please provide input data for further analysis" FontWeight="Bold"></Label>
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Margin="15,15,15,5">
+            <Label Content="Please generate primes, provide input data for further analysis &amp; use buttons to test RSA algorithm" FontWeight="Bold"></Label>
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="0" Margin="15">
-            <Label Content="Insert number:"></Label>
-            <TextBox Text="{Binding PlainByte}" Margin="15,5,15,5"></TextBox>
             <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="LightGray" BorderBrush="LightGray" 
-                    Content="{Binding GenerateButtonContent}" Margin="15,25,15,0" Command="{Binding GeneratePrimes}" HorizontalAlignment="Stretch"/>
-            <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="LightGray" BorderBrush="LightGray" 
-                    Content="{Binding EncryptButtonContent}" Margin="15,5,15,0" Command="{Binding EncryptByte}" HorizontalAlignment="Stretch"/>
+                    Content="{Binding GenerateButtonContent}" Margin="15,0,15,0" Command="{Binding GeneratePrimes}" HorizontalAlignment="Stretch"/>
+            <Label Content="Insert message:" Margin="0,25,15,5"></Label>
+            <TextBox Text="{Binding PlainByte}" Margin="15,5,15,5" Background="LightCyan"></TextBox>
         </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="1" Margin="15" Background="LightGray">
-            <Label Content="Public key:"></Label>
-            <Label Content="{Binding PublicKey}" Height="25" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,15"></Label>
-            <Label Content="Private key:"></Label>
-            <Label Content="{Binding PrivateKey}" Height="25" FontWeight="Bold" HorizontalAlignment="Center"></Label>
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="15" Background="#253A81">
+            <Label Content="Public key:" Foreground="Silver"></Label>
+            <Label Content="{Binding PublicKey}" Height="25" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,15" Foreground="White"></Label>
+            <Label Content="Private key:" Foreground="Silver"></Label>
+            <Label Content="{Binding PrivateKey}" Height="25" FontWeight="Bold" HorizontalAlignment="Center" Foreground="White"></Label>
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="0"  Margin="15">
-            <Label Content="Encrypted number:"></Label>
-            <TextBlock Text="{Binding EncryptedByte}" Margin="15,5,15,5"></TextBlock>
             <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="LightGray" BorderBrush="LightGray" 
-                    Content="{Binding DecryptButtonContent}" Margin="15,25,15,0" Command="{Binding DecryptByte}" HorizontalAlignment="Stretch"/>
+                    Content="{Binding EncryptButtonContent}" Margin="15,5,15,5" Command="{Binding EncryptByte}" HorizontalAlignment="Stretch"/>
+            <Label Content="Encrypted message:" Margin="0,5,15,5"></Label>
+            <TextBlock Text="{Binding EncryptedByte}" Margin="15,5,15,5" Background="LightCyan"></TextBlock>
+            <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="LightGray" BorderBrush="LightGray" 
+                    Content="{Binding DecryptButtonContent}" Margin="15,65,15,5" Command="{Binding DecryptByte}" HorizontalAlignment="Stretch"/>
+            <Label Content="Decrypted message:" Margin="0,5,15,5"></Label>
+            <TextBlock Text="{Binding DecryptedByte}" Margin="15,5,15,5" Background="LightCyan"></TextBlock>
         </StackPanel>
         <StackPanel Grid.Row="2" Grid.Column="1"  Margin="15">
-            <Label Content="Decrypted number:"></Label>
-            <TextBlock Text="{Binding DecryptedByte}" Margin="15,5,15,5"></TextBlock>
+            <TextBlock Text="{Binding ClueMessage}" Margin="0,5,15,5"></TextBlock>
             <Button Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" Background="LightGray" BorderBrush="LightGray" 
-                    Content="{Binding RepeatButtonContent}" Margin="15,25,15,0" HorizontalAlignment="Stretch" Command="{Binding Repeat}"/>
-        </StackPanel>
-        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Margin="15">
-            <Label Content="© 2017, Ernest Jędrzejczyk, Kamil Witkowski, Kamil Reszka for WULS" Foreground="Gray" FontWeight="ExtraLight"></Label>
+                    Content="{Binding RepeatButtonContent}" Margin="15,15,15,0" HorizontalAlignment="Stretch" Command="{Binding Repeat}"/>
+            <Label Content="{Binding AboutMessage}" Foreground="DimGray" FontWeight="ExtraLight" Margin="0,55,15,15"></Label>
         </StackPanel>
     </Grid>
 </Window>
