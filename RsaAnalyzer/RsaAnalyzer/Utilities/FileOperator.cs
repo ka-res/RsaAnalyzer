@@ -4,7 +4,7 @@ using RsaAnalyzer.Models;
 
 namespace RsaAnalyzer.Utilities
 {
-    class FileOperator
+    internal class FileOperator
     {
         public static void SaveRsaToFile(string fileName, Rsa rsa)
         {
@@ -53,7 +53,7 @@ namespace RsaAnalyzer.Utilities
             }
         }
 
-        //TODO: reading TimeSPan from file
+        //TODO: reading TimeSpan from file
         //public static TimeSpan ReadTimeSpanFromFile(string fileName, out TimeSpan timeSpan)
         //{
         //    using (var fileStream = new FileStream(

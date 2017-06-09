@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using RsaAnalyzer.Interfaces;
 
-namespace RsaAnalyzer.Utilities
+namespace RsaAnalyzer.Responsibility
 {
-    internal class RsaProvider
+    public class RsaProvider : IRsaAnalyzer
     {
         private static readonly Random Random = new Random();
 
-        public static Tuple<uint, uint, long> Run()
+        public Tuple<uint, uint, long> Run()
         {
             var sieveofEratosthenes = new Responsibility.SieveOfEratosthenes();
 
@@ -29,7 +30,7 @@ namespace RsaAnalyzer.Utilities
             return new Tuple<uint, uint, long>(n, e, d);
         }
 
-        private static long ModuloPow(long value, long pow, uint modulo)
+        public long ModuloPow(long value, long pow, uint modulo)
         {
             var result = value;
             for (var i = 0; i < pow - 1; i++)
@@ -40,7 +41,7 @@ namespace RsaAnalyzer.Utilities
             return result;
         }
 
-        private static ExtendedEuclideanResult ExtendedEuclidean(long a, long b)
+        public ExtendedEuclideanResult ExtendedEuclidean(long a, long b)
         {
             long u1 = 1;
             long u3 = a;
@@ -75,24 +76,24 @@ namespace RsaAnalyzer.Utilities
             return result;
         }
 
-        private struct ExtendedEuclideanResult
+        public struct ExtendedEuclideanResult
         {
             public long U1;
             public long U2;
             public long Gcd;
         }
 
-        private static uint ReturnN(ushort p, ushort q)
+        public uint ReturnN(ushort p, ushort q)
         {
             return (uint)(p * q);
         }
 
-        private static uint ReturnPhi(ushort p, ushort q) //uint
+        public uint ReturnPhi(ushort p, ushort q) //uint
         {
             return (uint)((p - 1) * (q - 1));
         }
 
-        private static List<uint> ReturnPossibleE(uint phi)
+        public List<uint> ReturnPossibleE(uint phi)
         {
             var result = new List<uint>();
 
@@ -107,7 +108,7 @@ namespace RsaAnalyzer.Utilities
             return result;
         }
 
-        private static Tuple<uint, long> ReturnEAndD(IReadOnlyList<uint> possibleE, uint phi)
+        public Tuple<uint, long> ReturnEAndD(IReadOnlyList<uint> possibleE, uint phi)
         {
             uint e;
             long d;

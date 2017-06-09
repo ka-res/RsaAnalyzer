@@ -1,6 +1,6 @@
 ﻿namespace RsaAnalyzer.Models
 {
-    class Rsa
+    internal class Rsa
     {
         public uint N { get; set; }
         public uint E { get; set; }

@@ -1,10 +1,10 @@
-﻿using System.Windows.Input;
-using RsaAnalyzer.Models;
+﻿using RsaAnalyzer.Models;
+using RsaAnalyzer.Responsibility;
 using RsaAnalyzer.Utilities;
 
 namespace RsaAnalyzer.ViewModels
 {
-    internal class RsaViewModel : BaseViewModel
+    internal class ShellViewModel : BaseViewModel
     {
         private Rsa _rsa;
 
@@ -16,26 +16,19 @@ namespace RsaAnalyzer.ViewModels
         private long _encryptedByte;
         private int _decryptedByte;
 
-        private volatile bool _initialized;
         private volatile bool _encrypting;
         private volatile bool _decrypting;
         private volatile bool _repeating;
 
-        public RsaViewModel()
+        public ShellViewModel()
         {
             _generatePrimes = new RelayCommand(p =>
             {
-                if (!Initialized)
-                {
-                    PrepareRsa();
+                PrepareRsa();
 
-                    OnPropertyChanged(nameof(PublicKey));
-                    OnPropertyChanged(nameof(PrivateKey));
-                }
-
-                Initialized = true;
-
-            }, p => !Initialized);
+                OnPropertyChanged(nameof(PublicKey));
+                OnPropertyChanged(nameof(PrivateKey));
+            });
 
             _encryptByte = new RelayCommand(p =>
             {
@@ -77,21 +70,10 @@ namespace RsaAnalyzer.ViewModels
 
             _repeat = new RelayCommand(p =>
                 {
-                    Initialized = false;
                     Encrypting = false;
                     Decrypting = false;
 
-                }, p => Initialized);
-        }
-
-        public bool Initialized
-        {
-            get => _initialized;
-            set
-            {
-                _initialized = true;
-                OnPropertyChanged();
-            }
+                });
         }
 
         public bool Encrypting
@@ -210,7 +192,8 @@ namespace RsaAnalyzer.ViewModels
 
         public void PrepareRsa()
         {
-            var values = RsaProvider.Run();
+            var rsaProvider = new RsaProvider();
+            var values = rsaProvider.Run();
             N = values.Item1;
             E = values.Item2;
             D = values.Item3;

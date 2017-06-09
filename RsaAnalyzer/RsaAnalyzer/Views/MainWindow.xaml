@@ -9,7 +9,7 @@
         Title="RSA Analyzer" Height="560" Width="640" Background="DarkGray">
 
     <Window.DataContext>
-        <viewModels:RsaViewModel />
+        <viewModels:ShellViewModel />
     </Window.DataContext>
 
     <Grid>
@@ -32,7 +32,7 @@
             <Label Content="Insert message:" Margin="0,25,15,5"></Label>
             <TextBox Text="{Binding PlainByte}" Margin="15,5,15,5" Background="LightCyan"></TextBox>
         </StackPanel>
-        <StackPanel Grid.Row="1" Grid.Column="1" Margin="15" Background="#253A81">
+        <StackPanel Grid.Row="1" Grid.Column="1" Margin="15" Background="DarkRed">
             <Label Content="Public key:" Foreground="Silver"></Label>
             <Label Content="{Binding PublicKey}" Height="25" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,15" Foreground="White"></Label>
             <Label Content="Private key:" Foreground="Silver"></Label>
