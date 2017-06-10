@@ -10,7 +10,7 @@ namespace RsaAnalyzer.Responsibility
 
         public Tuple<uint, uint, long> Run()
         {
-            var sieveofEratosthenes = new Responsibility.SieveOfEratosthenes();
+            var sieveofEratosthenes = new SieveOfEratosthenes();
 
             var allPrimes = sieveofEratosthenes.RunAlgorithm();
 
