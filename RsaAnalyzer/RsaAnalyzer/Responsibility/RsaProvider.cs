@@ -44,15 +44,15 @@ namespace RsaAnalyzer.Responsibility
         public ExtendedEuclideanResult ExtendedEuclidean(long a, long b)
         {
             long u1 = 1;
-            long u3 = a;
             long v1 = 0;
-            long v3 = b;
+            var u3 = a;
+            var v3 = b;
 
             while (v3 > 0)
             {
                 var q0 = u3 / v3;
                 var q1 = u3 % v3;
-                long tmp = v1 * q0;
+                var tmp = v1 * q0;
                 var tn = u1 - tmp;
 
                 u1 = v1;
