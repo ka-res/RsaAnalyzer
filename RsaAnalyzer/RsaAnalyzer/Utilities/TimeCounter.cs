@@ -4,7 +4,8 @@ namespace RsaAnalyzer.Utilities
 {
     class TimeCounter
     {
-        public static TimeSpan CalculateTimeSpan(TimeSpan fromTimeSpan, TimeSpan toTimeSpan)
+        public static TimeSpan CalculateTimeSpan(TimeSpan fromTimeSpan, 
+            TimeSpan toTimeSpan)
         {
             return toTimeSpan.Subtract(fromTimeSpan);
         }

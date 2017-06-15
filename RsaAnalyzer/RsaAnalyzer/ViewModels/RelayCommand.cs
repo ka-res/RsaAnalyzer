@@ -36,12 +36,11 @@ namespace RsaAnalyzer.ViewModels
         /// </summary>
         /// <param name="execute">The execution logic.</param>
         /// <param name="canExecute">The execution status logic.</param>
-        public RelayCommand(Action<object> execute, Predicate<object> canExecute)
+        public RelayCommand(Action<object> execute, 
+            Predicate<object> canExecute)
         {
-            if (execute == null)
-                throw new ArgumentNullException("execute");
-
-            _execute = execute;
+            _execute = execute ?? 
+                throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
         }
 
@@ -52,7 +51,7 @@ namespace RsaAnalyzer.ViewModels
         [DebuggerStepThrough]
         public bool CanExecute(object parameter)
         {
-            return _canExecute == null ? true : _canExecute(parameter);
+            return _canExecute?.Invoke(parameter) ?? true;
         }
 
         public event EventHandler CanExecuteChanged
@@ -91,9 +90,8 @@ namespace RsaAnalyzer.ViewModels
         /// </summary>
         protected virtual void OnCanExecuteChanged()
         {
-            EventHandler eCanExecuteChanged = _internalCanExecuteChanged;
-            if (eCanExecuteChanged != null)
-                eCanExecuteChanged(this, EventArgs.Empty);
+            var eCanExecuteChanged = _internalCanExecuteChanged;
+            eCanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
 
         #endregion // ICommand Members

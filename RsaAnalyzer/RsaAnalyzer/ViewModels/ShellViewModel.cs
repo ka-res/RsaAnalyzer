@@ -1,4 +1,6 @@
-﻿using RsaAnalyzer.Models;
+﻿using System.Windows;
+using RsaAnalyzer.Interfaces;
+using RsaAnalyzer.Models;
 using RsaAnalyzer.Responsibility;
 using RsaAnalyzer.Utilities;
 
@@ -34,7 +36,11 @@ namespace RsaAnalyzer.ViewModels
             {
                 var result = new RsaProvider();
 
-                if (!Encrypting)
+                if (E <= 0 || N <= 0 || D <= 0)
+                {
+                    MessageBox.Show("Please generate primes first!");
+                }
+                else if (!Encrypting)
                 {
                     EncryptedByte = result.EncryptValue(PlainByte, E, N);
 
@@ -53,7 +59,11 @@ namespace RsaAnalyzer.ViewModels
             {
                 var result = new RsaProvider();
 
-                if (!Decrypting)
+                if (E <= 0 || N <= 0 || D <= 0)
+                {
+                    MessageBox.Show("Please generate primes first!");
+                }
+                else if (!Decrypting)
                 {
                     DecryptedByte = result.DecryptValue(EncryptedByte, D, N);
 
@@ -255,8 +265,13 @@ namespace RsaAnalyzer.ViewModels
         public string DecryptButtonContent => "Decrypt message";
 
         public string RepeatButtonContent => "Clear";
-        public string ClueMessage => "To restart for new message \npress the button below";
+        public string ClueMessage => "To restart for new message " +
+                                     "\npress the button below";
 
-        public string AboutMessage => "© 2017 \nErnest Jędrzejczyk \nKamil Reszka \nKamil Witkowski \nfor WULS";
+        public string AboutMessage => "© 2017 " +
+                                      "\nErnest Jędrzejczyk " +
+                                      "\nKamil Reszka " +
+                                      "\nKamil Witkowski " +
+                                      "\nfor WULS";
     }
 }

@@ -14,7 +14,8 @@ namespace RsaAnalyzer.Responsibility
 
             var allPrimes = sieveofEratosthenes.RunAlgorithm();
 
-            var primes = allPrimes.GetRange(allPrimes.Count / 2, allPrimes.Count / 2);
+            var primes = allPrimes.GetRange(allPrimes.Count / 2, 
+                allPrimes.Count / 2);
 
             ushort p = primes[Random.Next(0, primes.Count)],
                    q = primes[Random.Next(0, primes.Count)];
@@ -35,7 +36,7 @@ namespace RsaAnalyzer.Responsibility
             var result = value;
             for (var i = 0; i < pow - 1; i++)
             {
-                result = (result * value);
+                result = result * value;
                 result = result % modulo;
             }
             return result;
@@ -61,16 +62,15 @@ namespace RsaAnalyzer.Responsibility
                 v3 = q1;
             }
 
-            var tmp2 = u1 * (a);
-            tmp2 = u3 - (tmp2);
-            var res = tmp2 / (b);
+            var tmp2 = u1 * a;
+            tmp2 = u3 - tmp2;
+            var res = tmp2 / b;
 
             var result = new ExtendedEuclideanResult
             {
                 U1 = u1,
                 U2 = res,
                 Gcd = u3
-
             };
 
             return result;
@@ -108,7 +108,8 @@ namespace RsaAnalyzer.Responsibility
             return result;
         }
 
-        public Tuple<uint, long> ReturnEAndD(IReadOnlyList<uint> possibleE, uint phi)
+        public Tuple<uint, long> ReturnEAndD(IReadOnlyList<uint> possibleE, 
+            uint phi)
         {
             uint e;
             long d;
