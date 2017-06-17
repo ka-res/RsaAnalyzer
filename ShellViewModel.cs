@@ -50,13 +50,14 @@ namespace RsaAnalyzer.ViewModels
                     long[] tab_test = new long[tab_size];
                     for (int i = 0; i < result.EcryptValue2(PlainByte,E,N).Length; i++)
                     {
-                        EncryptedByte = result.EcryptValue2(PlainByte, E, N)[i].ToString();
-                        
-                        tab_test[i] = Convert.ToInt64(EncryptedByte);
+                        // EncryptedByte = result.EcryptValue2(PlainByte, E, N)[i].ToString();
+
+                        //tab_test[i] = Convert.ToInt64(EncryptedByte);
+                        tab_test[i] = Convert.ToInt64(result.EcryptValue2(PlainByte, E, N)[i].ToString());
                     }
                     tab = tab_test;
-
-                    OnPropertyChanged(nameof(tab));
+                    EncryptedByte = result.SzyfrNaString(tab_test);
+                    OnPropertyChanged(nameof(EncryptedByte));
 
                     Encrypting = true;
                 }
