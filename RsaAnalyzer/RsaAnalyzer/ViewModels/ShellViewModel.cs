@@ -3,6 +3,9 @@ using RsaAnalyzer.Interfaces;
 using RsaAnalyzer.Models;
 using RsaAnalyzer.Responsibility;
 using RsaAnalyzer.Utilities;
+using System.Text;
+using System;
+using System.Collections.Generic;
 
 namespace RsaAnalyzer.ViewModels
 {
@@ -14,13 +17,16 @@ namespace RsaAnalyzer.ViewModels
         private uint _e;
         private long _d;
 
-        private ushort _plainByte;
-        private long _encryptedByte;
-        private int _decryptedByte;
+        private string _plainByte;
+        private string _encryptedByte;
+        private string _decryptedByte;
 
         private volatile bool _encrypting;
         private volatile bool _decrypting;
         private volatile bool _repeating;
+        //ustawiona długość wiadomości na 100 znaków.
+        private int tab_size=100;
+        private long[] tab;
 
         public ShellViewModel()
         {
@@ -31,7 +37,6 @@ namespace RsaAnalyzer.ViewModels
                 OnPropertyChanged(nameof(PublicKey));
                 OnPropertyChanged(nameof(PrivateKey));
             });
-
             _encryptByte = new RelayCommand(p =>
             {
                 var result = new RsaProvider();
@@ -42,8 +47,16 @@ namespace RsaAnalyzer.ViewModels
                 }
                 else if (!Encrypting)
                 {
-                    EncryptedByte = result.EncryptValue(PlainByte, E, N);
+                    long[] tab_test = new long[tab_size];
+                    for (int i = 0; i < result.EcryptValue2(PlainByte,E,N).Length; i++)
+                    {
+                        // EncryptedByte = result.EcryptValue2(PlainByte, E, N)[i].ToString();
 
+                        //tab_test[i] = Convert.ToInt64(EncryptedByte);
+                        tab_test[i] = Convert.ToInt64(result.EcryptValue2(PlainByte, E, N)[i].ToString());
+                    }
+                    tab = tab_test;
+                    EncryptedByte = result.SzyfrNaString(tab_test);
                     OnPropertyChanged(nameof(EncryptedByte));
 
                     Encrypting = true;
@@ -65,7 +78,7 @@ namespace RsaAnalyzer.ViewModels
                 }
                 else if (!Decrypting)
                 {
-                    DecryptedByte = result.DecryptValue(EncryptedByte, D, N);
+                    DecryptedByte = result.DecryptValue2(tab, D, N);
 
                     OnPropertyChanged(nameof(DecryptedByte));
 
@@ -166,17 +179,18 @@ namespace RsaAnalyzer.ViewModels
             }
         }
 
-        public ushort PlainByte
+        public string PlainByte
         {
             get => _plainByte;
             set
             {
+                //_plainByte = Convert.ToUInt16(value);
                 _plainByte = value;
                 OnPropertyChanged();
             }
         }
 
-        public long EncryptedByte
+        public string EncryptedByte
         {
             get => _encryptedByte;
             set
@@ -186,7 +200,7 @@ namespace RsaAnalyzer.ViewModels
             }
         }
 
-        public int DecryptedByte
+        public string DecryptedByte
         {
             get => _decryptedByte;
             set
@@ -227,7 +241,6 @@ namespace RsaAnalyzer.ViewModels
                 OnPropertyChanged();
             }
         }
-
         public RelayCommand EncryptByte
         {
             get => _encryptByte;

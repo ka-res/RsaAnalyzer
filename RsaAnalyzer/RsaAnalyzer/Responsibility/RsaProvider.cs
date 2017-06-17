@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using RsaAnalyzer.Interfaces;
+using System.Text;
 
 namespace RsaAnalyzer.Responsibility
 {
     public class RsaProvider : IRsaAnalyzer
     {
         private static readonly Random Random = new Random();
+        internal int Length;
 
         public Tuple<uint, uint, long> Run()
         {
@@ -133,9 +135,50 @@ namespace RsaAnalyzer.Responsibility
             return ModuloPow(plainByte, e, n);
         }
 
+        
+        //funkcja pobiera z inputa wiadomosc do zaszyfrownaia w postaci stringa. koduje w iso, zeby byly polskie znaki.
+        //zakodowany tekst w iso szyfruje za pomoca klucza publicznego. 
+        //todo: zmienic inputa, zeby pobieral tekst w formie string, nie ushort.
+         public long[] EcryptValue2(string tekst_do_szyfrowania, uint e, uint n)
+            {
+            //tekst do szyfrowania pobierany z inputa.
+            byte[] tab = Encoding.GetEncoding("iso-8859-2").GetBytes(tekst_do_szyfrowania);
+            long[] szyfr = new long[tab.Length];
+            for (int i = 0; i < tab.Length; i++)
+            {
+                szyfr[i] = ModuloPow((long)tab[i], e, n);
+            }
+            return szyfr;
+            }
+            
+
+        //funkcja zamienia tablice z szyfrem na tekst. 
+        
+        public string SzyfrNaString(long[] tab)
+        {
+            string szyfr = "";
+            for (int i = 0; i < tab.Length; i++)
+            {
+                szyfr += tab[i].ToString();
+            }
+            return szyfr;
+        }
+        
         public int DecryptValue(long encryptedByte, long d, uint n)
         {
             return (ushort)ModuloPow(encryptedByte, d, n);
         }
+        // funkcja pobiera szyfr w postaci tablicy i zamienia na wiadomosc poczatkowa.
+        public string DecryptValue2(long[] tab, long d, uint n)
+        {
+            string wiadomosc_poczatkowa = "";
+            for (int i = 0; i < tab[i]; i++)
+            {
+                long m = ModuloPow(tab[i], d, n);
+                wiadomosc_poczatkowa += Encoding.GetEncoding("iso-8859-2").GetString(new byte[] {(byte)m });
+            }
+            return wiadomosc_poczatkowa;
+        }
+        
     }
 }
