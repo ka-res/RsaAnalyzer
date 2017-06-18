@@ -3,11 +3,11 @@
 namespace RsaAnalyzer.Views
 {
     /// <summary>
-    /// Interaction logic for ChartWindow.xaml
+    /// Interaction logic for HelpWindow.xaml
     /// </summary>
-    public partial class ChartWindow : Window
+    public partial class HelpWindow : Window
     {
-        public ChartWindow()
+        public HelpWindow()
         {
             InitializeComponent();
         }

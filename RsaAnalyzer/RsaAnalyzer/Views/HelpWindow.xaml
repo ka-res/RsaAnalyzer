@@ -1,11 +1,11 @@
-﻿<Window x:Class="RsaAnalyzer.Views.ChartWindow"
+﻿<Window x:Class="RsaAnalyzer.Views.HelpWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RsaAnalyzer.Views"
         mc:Ignorable="d"
-        Title="Performance Chart" Height="300" Width="300">
+        Title="Help" Height="300" Width="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
         
         <StackPanel Grid.Row="0" Margin="15,5,15,5">
-            <Label Content="Chart shows algorithm progress in time"></Label>
+            <Label Content="Useful formulas"></Label>
         </StackPanel>
         <StackPanel Grid.Row="1" Margin="15">
             

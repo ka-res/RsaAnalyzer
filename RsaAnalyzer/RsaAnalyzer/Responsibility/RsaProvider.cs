@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using RsaAnalyzer.Interfaces;
 using System.Text;
 
@@ -8,7 +9,6 @@ namespace RsaAnalyzer.Responsibility
     public class RsaProvider : IRsaAnalyzer
     {
         private static readonly Random Random = new Random();
-        internal int Length;
 
         public Tuple<uint, uint, long> Run()
         {
@@ -16,7 +16,7 @@ namespace RsaAnalyzer.Responsibility
 
             var allPrimes = sieveofEratosthenes.RunAlgorithm();
 
-            var primes = allPrimes.GetRange(allPrimes.Count / 2, 
+            var primes = allPrimes.GetRange(allPrimes.Count / 2,
                 allPrimes.Count / 2);
 
             ushort p = primes[Random.Next(0, primes.Count)],
@@ -110,7 +110,7 @@ namespace RsaAnalyzer.Responsibility
             return result;
         }
 
-        public Tuple<uint, long> ReturnEAndD(IReadOnlyList<uint> possibleE, 
+        public Tuple<uint, long> ReturnEAndD(IReadOnlyList<uint> possibleE,
             uint phi)
         {
             uint e;
@@ -135,50 +135,38 @@ namespace RsaAnalyzer.Responsibility
             return ModuloPow(plainByte, e, n);
         }
 
-        
-        //funkcja pobiera z inputa wiadomosc do zaszyfrownaia w postaci stringa. koduje w iso, zeby byly polskie znaki.
-        //zakodowany tekst w iso szyfruje za pomoca klucza publicznego. 
-        //todo: zmienic inputa, zeby pobieral tekst w formie string, nie ushort.
-         public long[] EcryptValue2(string tekst_do_szyfrowania, uint e, uint n)
-            {
-            //tekst do szyfrowania pobierany z inputa.
-            byte[] tab = Encoding.GetEncoding("iso-8859-2").GetBytes(tekst_do_szyfrowania);
-            long[] szyfr = new long[tab.Length];
-            for (int i = 0; i < tab.Length; i++)
-            {
-                szyfr[i] = ModuloPow((long)tab[i], e, n);
-            }
-            return szyfr;
-            }
-            
-
-        //funkcja zamienia tablice z szyfrem na tekst. 
-        
-        public string SzyfrNaString(long[] tab)
+        //TODO: zmienic inputa, zeby pobieral tekst w formie string, nie ushort.
+        public long[] EcryptStringValue(string textToEncrypt, uint e, uint n)
         {
-            string szyfr = "";
-            for (int i = 0; i < tab.Length; i++)
+            var tab = Encoding.GetEncoding("iso-8859-2").GetBytes(textToEncrypt);
+            var encrypted = new long[tab.Length];
+            for (var i = 0; i < tab.Length; i++)
             {
-                szyfr += tab[i].ToString();
+                encrypted[i] = ModuloPow((long)tab[i], e, n);
             }
-            return szyfr;
+            return encrypted;
         }
-        
+
+        public string EncryptedTabToString(long[] tab)
+        {
+            return tab.Aggregate("", (current, t) => current + t.ToString());
+        }
+
         public int DecryptValue(long encryptedByte, long d, uint n)
         {
             return (ushort)ModuloPow(encryptedByte, d, n);
         }
-        // funkcja pobiera szyfr w postaci tablicy i zamienia na wiadomosc poczatkowa.
-        public string DecryptValue2(long[] tab, long d, uint n)
+
+        public string DecryptTabValues(long[] tab, long d, uint n)
         {
-            string wiadomosc_poczatkowa = "";
-            for (int i = 0; i < tab[i]; i++)
+            var startMessage = "";
+            for (var i = 0; i < tab[i]; i++)
             {
-                long m = ModuloPow(tab[i], d, n);
-                wiadomosc_poczatkowa += Encoding.GetEncoding("iso-8859-2").GetString(new byte[] {(byte)m });
+                var m = ModuloPow(tab[i], d, n);
+                startMessage += Encoding.GetEncoding("iso-8859-2").GetString(new byte[] { (byte)m });
             }
-            return wiadomosc_poczatkowa;
+            return startMessage;
         }
-        
+
     }
 }

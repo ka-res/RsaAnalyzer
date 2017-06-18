@@ -1,16 +1,17 @@
 ﻿using System.Windows;
-using RsaAnalyzer.Interfaces;
 using RsaAnalyzer.Models;
 using RsaAnalyzer.Responsibility;
 using RsaAnalyzer.Utilities;
-using System.Text;
 using System;
-using System.Collections.Generic;
+using RsaAnalyzer.Views;
 
 namespace RsaAnalyzer.ViewModels
 {
     internal class ShellViewModel : BaseViewModel
     {
+        private const int TabSize = 100;
+        private long[] _tab;
+
         private Rsa _rsa;
 
         private uint _n;
@@ -24,9 +25,6 @@ namespace RsaAnalyzer.ViewModels
         private volatile bool _encrypting;
         private volatile bool _decrypting;
         private volatile bool _repeating;
-        //ustawiona długość wiadomości na 100 znaków.
-        private int tab_size=100;
-        private long[] tab;
 
         public ShellViewModel()
         {
@@ -37,6 +35,7 @@ namespace RsaAnalyzer.ViewModels
                 OnPropertyChanged(nameof(PublicKey));
                 OnPropertyChanged(nameof(PrivateKey));
             });
+
             _encryptByte = new RelayCommand(p =>
             {
                 var result = new RsaProvider();
@@ -47,16 +46,14 @@ namespace RsaAnalyzer.ViewModels
                 }
                 else if (!Encrypting)
                 {
-                    long[] tab_test = new long[tab_size];
-                    for (int i = 0; i < result.EcryptValue2(PlainByte,E,N).Length; i++)
+                    var tabTest = new long[TabSize];
+                    for (var i = 0; i < result.EcryptStringValue(PlainByte, E, N).Length; i++)
                     {
-                        // EncryptedByte = result.EcryptValue2(PlainByte, E, N)[i].ToString();
-
-                        //tab_test[i] = Convert.ToInt64(EncryptedByte);
-                        tab_test[i] = Convert.ToInt64(result.EcryptValue2(PlainByte, E, N)[i].ToString());
+                        tabTest[i] = Convert.ToInt64(result.EcryptStringValue(PlainByte, E, N)[i].ToString());
                     }
-                    tab = tab_test;
-                    EncryptedByte = result.SzyfrNaString(tab_test);
+
+                    _tab = tabTest;
+                    EncryptedByte = result.EncryptedTabToString(tabTest);
                     OnPropertyChanged(nameof(EncryptedByte));
 
                     Encrypting = true;
@@ -78,7 +75,7 @@ namespace RsaAnalyzer.ViewModels
                 }
                 else if (!Decrypting)
                 {
-                    DecryptedByte = result.DecryptValue2(tab, D, N);
+                    DecryptedByte = result.DecryptTabValues(_tab, D, N);
 
                     OnPropertyChanged(nameof(DecryptedByte));
 
@@ -97,6 +94,12 @@ namespace RsaAnalyzer.ViewModels
                     Decrypting = false;
 
                 });
+
+            _help = new RelayCommand(p =>
+            {
+                var help = new HelpWindow();
+                help.Show();
+            });
         }
 
         public bool Encrypting
@@ -231,6 +234,7 @@ namespace RsaAnalyzer.ViewModels
         private RelayCommand _encryptByte;
         private RelayCommand _decryptByte;
         private RelayCommand _repeat;
+        private RelayCommand _help;
 
         public RelayCommand GeneratePrimes
         {
@@ -271,6 +275,16 @@ namespace RsaAnalyzer.ViewModels
             }
         }
 
+        public RelayCommand Help
+        {
+            get => _help;
+            set
+            {
+                _help = value;
+                OnPropertyChanged();
+            }
+        }
+
         public string GenerateButtonContent => "Generate primes";
 
         public string EncryptButtonContent => "Encrypt message";
@@ -278,6 +292,9 @@ namespace RsaAnalyzer.ViewModels
         public string DecryptButtonContent => "Decrypt message";
 
         public string RepeatButtonContent => "Clear";
+
+        public string HelpButtonContent => "Help";
+
         public string ClueMessage => "To restart for new message " +
                                      "\npress the button below";
 
