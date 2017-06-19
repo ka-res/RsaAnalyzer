@@ -90,7 +90,7 @@ namespace RsaAnalyzer.Responsibility
             return (uint)(p * q);
         }
 
-        public uint ReturnPhi(ushort p, ushort q) //uint
+        public uint ReturnPhi(ushort p, ushort q) 
         {
             return (uint)((p - 1) * (q - 1));
         }
@@ -135,7 +135,6 @@ namespace RsaAnalyzer.Responsibility
             return ModuloPow(plainByte, e, n);
         }
 
-        //TODO: zmienic inputa, zeby pobieral tekst w formie string, nie ushort.
         public long[] EcryptStringValue(string textToEncrypt, uint e, uint n)
         {
             var tab = Encoding.GetEncoding("iso-8859-2").GetBytes(textToEncrypt);

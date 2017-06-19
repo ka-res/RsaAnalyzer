@@ -187,7 +187,6 @@ namespace RsaAnalyzer.ViewModels
             get => _plainByte;
             set
             {
-                //_plainByte = Convert.ToUInt16(value);
                 _plainByte = value;
                 OnPropertyChanged();
             }
