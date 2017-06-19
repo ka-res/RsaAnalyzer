@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using RsaAnalyzer.Models;
 using RsaAnalyzer.Responsibility;
-using RsaAnalyzer.Utilities;
 using System;
 using RsaAnalyzer.Views;
 
@@ -9,7 +8,6 @@ namespace RsaAnalyzer.ViewModels
 {
     internal class ShellViewModel : BaseViewModel
     {
-        private const int TabSize = 100;
         private long[] _tab;
 
         private Rsa _rsa;
@@ -96,11 +94,11 @@ namespace RsaAnalyzer.ViewModels
 
                 });
 
-            _help = new RelayCommand(p =>
-            {
-                var help = new HelpWindow();
-                help.Show();
-            });
+            //_help = new RelayCommand(p =>
+            //{
+            //    var help = new HelpWindow();
+            //    help.Show();
+            //});
         }
 
         public bool Encrypting
@@ -226,15 +224,13 @@ namespace RsaAnalyzer.ViewModels
             D = values.Item3;
 
             Rsa = new Rsa(N, E, D);
-
-            FileOperator.SaveRsaToFile("NED-RSA.txt", Rsa);
         }
 
         private RelayCommand _generatePrimes;
         private RelayCommand _encryptByte;
         private RelayCommand _decryptByte;
         private RelayCommand _repeat;
-        private RelayCommand _help;
+        //private RelayCommand _help;
 
         public RelayCommand GeneratePrimes
         {
@@ -275,15 +271,15 @@ namespace RsaAnalyzer.ViewModels
             }
         }
 
-        public RelayCommand Help
-        {
-            get => _help;
-            set
-            {
-                _help = value;
-                OnPropertyChanged();
-            }
-        }
+        //public RelayCommand Help
+        //{
+        //    get => _help;
+        //    set
+        //    {
+        //        _help = value;
+        //        OnPropertyChanged();
+        //    }
+        //}
 
         public string GenerateButtonContent => "Generate primes";
 
@@ -291,9 +287,9 @@ namespace RsaAnalyzer.ViewModels
 
         public string DecryptButtonContent => "Decrypt message";
 
-        public string RepeatButtonContent => "Clear";
+        public string RepeatButtonContent => "Start over";
 
-        public string HelpButtonContent => "Help";
+        //public string HelpButtonContent => "Help";
 
         public string ClueMessage => "To restart for new message " +
                                      "\npress the button below";

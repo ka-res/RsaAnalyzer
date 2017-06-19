@@ -2,7 +2,7 @@
 
 namespace RsaAnalyzer.Utilities
 {
-    class TimeCounter
+    internal class TimeCounter
     {
         public static TimeSpan CalculateTimeSpan(TimeSpan fromTimeSpan, 
             TimeSpan toTimeSpan)
