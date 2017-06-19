@@ -226,7 +226,7 @@ namespace RsaAnalyzer.ViewModels
 
             Rsa = new Rsa(N, E, D);
 
-            FileOperator.SaveRsaToFile("paniLodzia.txt", Rsa);
+            FileOperator.SaveRsaToFile("NED-RSA.txt", Rsa);
         }
 
         private RelayCommand _generatePrimes;
