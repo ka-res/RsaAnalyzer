@@ -159,7 +159,7 @@ namespace RsaAnalyzer.Responsibility
         public string DecryptTabValues(long[] tab, long d, uint n)
         {
             var startMessage = "";
-            for (var i = 0; i < tab[i]; i++)
+            for (var i = 0; i < tab.Length; i++)
             {
                 var m = ModuloPow(tab[i], d, n);
                 startMessage += Encoding.GetEncoding("iso-8859-2").GetString(new byte[] { (byte)m });

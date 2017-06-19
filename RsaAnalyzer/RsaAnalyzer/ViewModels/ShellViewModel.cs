@@ -46,8 +46,9 @@ namespace RsaAnalyzer.ViewModels
                 }
                 else if (!Encrypting)
                 {
-                    var tabTest = new long[TabSize];
-                    for (var i = 0; i < result.EcryptStringValue(PlainByte, E, N).Length; i++)
+                    var numberOfBlocks = result.EcryptStringValue(PlainByte, E, N).Length;
+                    var tabTest = new long[numberOfBlocks];
+                    for (var i = 0; i < numberOfBlocks; i++)
                     {
                         tabTest[i] = Convert.ToInt64(result.EcryptStringValue(PlainByte, E, N)[i].ToString());
                     }
